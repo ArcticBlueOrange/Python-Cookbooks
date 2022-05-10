@@ -50,20 +50,25 @@ Each select_and_do_stuff function have the same structure:
 """
 
 DEBUG = False
+DEFAULT_OPTIONS = [
+    '--ignore-certificate-errors',
+    '--ignore-ssl-errors',
+    '--start-maximized',
+    'log-level=3,
+    '--silent',
+    '--disable-gpu',
+    '--headless',
+    '--window-size=1920x1080',
+]
+
 ## Functions to connect to driver
 def _raise(ex):
     raise ex
 
 
-def add_options(driver_options):
-    driver_options.add_argument('--ignore-certificate-errors')
-    driver_options.add_argument('--ignore-ssl-errors')
-    driver_options.add_argument("--start-maximized")
-    driver_options.add_argument("log-level=3")
-    driver_options.add_argument("--silent")
-    driver_options.add_argument('--disable-gpu')
-    driver_options.add_argument('--headless')
-    driver_options.add_argument("--window-size=1920x1080")
+def add_options(driver_options = DEFAULT_OPTIONS):
+    for option in driver_options:
+        driver_options.add_argument(option)
 
     
 def get_driver(browser = 'chrome'):
